@@ -154,12 +154,12 @@ right_sensor_band.send_signals_ratio = send_signals_ratio;
 right_sensor_band.flush;
 
 disp('Sampling sensor band...');
-right_sensor_band.start_writeing_signals_to_file(data_filename, 'test data comment');
+right_sensor_band.start_log_signals_to_file(data_filename, 'test data comment');
 right_sensor_band.send_signals = true;
 pause(5);
 right_sensor_band.send_signals = false;
 pause(0.5);
-right_sensor_band.stop_writing_signals_to_file();
+right_sensor_band.stop_log_signals_to_file();
 
 % Tests:
 

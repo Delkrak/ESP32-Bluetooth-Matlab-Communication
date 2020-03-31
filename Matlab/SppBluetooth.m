@@ -383,7 +383,8 @@ classdef SppBluetooth < handle
             else
                 data = reshape(msg.numbers, [], length(msg.numbers) / length(msg.strings))';
             end
-            t = array2table(data, 'VariableNames', header); 
+            t = array2table(data, 'VariableNames', header);
+            t.Properties.Description = msg.command;
         end
     end
     
