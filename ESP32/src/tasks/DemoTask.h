@@ -44,6 +44,7 @@ struct DemoTask : TaskInterface {
 
       } else if(incomming_message.is_command("some_command_with_answer")){
         send_message_fun(Message(incomming_message.command, {1.0f, 2.0f, 3.0f, 1234.0f}, {"a", "b", "c", "d"}));
+        return true;
       }
       return false;
   }
