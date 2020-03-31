@@ -6,6 +6,7 @@
 #include "tasks/DemoMotorControllerTask.h"
 #include "tasks/DemoSensorBandTask.h"
 
+
 using namespace std;
 
 void get_potential_tasks(std::map<string, TaskInterface*> &potential_tasks){

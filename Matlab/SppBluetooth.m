@@ -45,6 +45,10 @@ classdef SppBluetooth < handle
             obj.init(board_task_name, signal_buffer_size, message_buffer_size);
         end
         
+        function delete(obj)
+           obj.stop_log_signals_to_file(); 
+        end
+        
         function disconnect(obj)
             if ~isempty(obj.b)
                 disp(['Disconnecting from "', obj.name, '"...']);
@@ -329,7 +333,7 @@ classdef SppBluetooth < handle
         % Signals write to file buffer handle
         %
         
-        function start_writeing_signals_to_file(obj, filename, comment)
+        function start_log_signals_to_file(obj, filename, comment)
             if nargin < 3
                comment = filename; 
             end
@@ -345,7 +349,7 @@ classdef SppBluetooth < handle
             fwrite(obj.signal_file_handle, binary_signals_header_data, 'uint8');
         end
         
-        function stop_writing_signals_to_file(obj)
+        function stop_log_signals_to_file(obj)
             if 0 <= obj.signal_file_handle
                 fclose(obj.signal_file_handle);
             end
@@ -436,6 +440,11 @@ classdef SppBluetooth < handle
         function set.send_signals_ratio(obj, val)
            obj.send(obj.send_signals_ratio_set_cmd, val);
            assert(obj.send_signals_ratio == val);
+           
+           send_frequency = obj.send_frequency;
+           if 125 < send_frequency
+               warning(['Send frequency is ' num2str(send_frequency) ' Hz. Near-realtime requirements can require it to be less than 125 Hz.']);
+           end
         end
         function val = get.send_signals_ratio(obj)
            msg = obj.query(obj.send_signals_ratio_get_cmd);
@@ -446,6 +455,11 @@ classdef SppBluetooth < handle
         function set.send_signals(obj, val)
            obj.send(obj.send_signals_set_cmd, val);
            assert(obj.send_signals == val);
+           
+           send_frequency = obj.send_frequency;
+           if 125 < send_frequency
+               warning(['Send frequency is ' num2str(send_frequency) ' Hz. Near-realtime requirements can require it to be less than 125 Hz.']);
+           end
         end
         function val = get.send_signals(obj)
            msg = obj.query(obj.send_signals_get_cmd);
