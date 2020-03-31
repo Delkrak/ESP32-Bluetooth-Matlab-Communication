@@ -1,10 +1,9 @@
 clear all; clc;
 
-buffer_size = 60 * 1000;
-
 disp('Connecting to devices..');
+buffer_size = 30 * 1000;
 motor_controller = SppBluetooth('009ABBE350CC@Exo-Aider', 'demo_motor_controller', buffer_size);
-left_sensor_band = []; %SppBluetooth('60FB9912CFA4@Exo-Aider', 'demo_left_sensor_band', buffer_size);
+left_sensor_band = SppBluetooth('60FB9912CFA4@Exo-Aider', 'demo_left_sensor_band', buffer_size);
 right_sensor_band = SppBluetooth('74E80B12CFA4@Exo-Aider', 'demo_right_sensor_band', buffer_size);
 devices = [motor_controller, left_sensor_band, right_sensor_band];
 
@@ -179,6 +178,7 @@ assert(all(isalmost(FSR1_mod, 0.01, abs_tol)));
 FSR1_diff = diff(FSR1(1:send_signals_ratio:end));
 assert(all(isalmost(FSR1_diff, send_signals_ratio, abs_tol)));
 
+figure(2);
 plot(1:length(EMG1_mod), EMG1_mod, 1:length(FSR1_mod), FSR1_mod);
 legend('EMG1', 'FSR1');
 

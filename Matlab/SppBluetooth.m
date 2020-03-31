@@ -524,6 +524,23 @@ classdef SppBluetooth < handle
                disp([' * ',  devices.RemoteNames{i}]);
             end
         end
+        
+        function close_all_bluetooth_connections()
+           first = true;
+           for device = instrfind()
+               if strcmp(device.Type, 'bluetooth')
+                  if first
+                      disp('Closing all active bluetooth connections:');
+                      first = false;
+                  end
+                  if strcmp(device.Status, 'open')
+                     fclose(device); 
+                  end
+                  disp([' *  ', device.RemoteName, ':', num2str(device.Channel)]);
+                  delete(device);
+               end
+           end
+        end
     end 
 end
 
